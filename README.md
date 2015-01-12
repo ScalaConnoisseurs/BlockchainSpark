@@ -1,6 +1,6 @@
 # PoliceSpark
 
-Large scala data processing of police crime statistics.
+Large scale data processing of police crime statistics.
 
 ## Setup
 
