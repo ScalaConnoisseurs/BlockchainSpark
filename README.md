@@ -13,3 +13,5 @@ Large scale data processing of police crime statistics.
 1. Clone the repository.
 2. cd PoliceSpark
 3. sbt compile
+
+http://data.police.uk/api/crimes-at-location?date=2012-02&lat=52.629729&lng=-1.131592
