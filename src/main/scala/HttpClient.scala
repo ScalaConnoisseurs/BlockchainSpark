@@ -5,15 +5,15 @@ import akka.actor.ActorSystem
 import scala.concurrent.Future
 
 
-object HttpClient extends App {
+class HttpClient {
   
   implicit val system = ActorSystem("police-data-client")
   import system.dispatcher // execution context for futures
 
   val pipeline: HttpRequest => Future[HttpResponse] = sendReceive
 
-  def callPoliceApi() {
-    pipeline(Get("http://data.police.uk/api/crime-last-updated")).onComplete(response => println(response.get.toString))
+  def callPoliceApi(): Future[String] = {
+    pipeline(Get("http://data.police.uk/api/crime-last-updated")).map(response => response.message.toString)
   }
   
   callPoliceApi()
