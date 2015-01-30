@@ -1,1 +1,1 @@
-web: target/start
+web: target/universal/stage/bin/policespark
