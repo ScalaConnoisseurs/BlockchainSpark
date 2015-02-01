@@ -1,10 +1,22 @@
-import akka.actor.{ActorSystem, ActorRefFactory, Props}
+import akka.actor.ActorSystem
 import spray.routing.SimpleRoutingApp
 
-object Main extends App with SimpleRoutingApp with HttpRoutes {
+object Main extends SimpleRoutingApp with HttpRoutes {
   implicit val system = ActorSystem("system")
 
-  startServer(interface = "localhost", port = 8080) {
-    pingRoute
+  def main(args: Array[String]) {
+    val port = parsePort(args)
+    startServer(interface = "localhost", port) {
+      pingRoute
+    }
   }
+  
+  def parsePort(args: Array[String]): Integer = 
+    try {
+      Integer.parseInt(args(0))
+    } catch {
+      case e: Exception =>
+        println("Defaulting to port 8080")
+        8080
+    }
 }

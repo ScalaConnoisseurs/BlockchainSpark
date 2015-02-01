@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/policespark
+web: target/universal/stage/bin/policespark $PORT
