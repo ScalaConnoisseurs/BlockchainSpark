@@ -8,7 +8,7 @@ import spray.http.{HttpMethods, HttpRequest, Uri}
 //val timeout: Timeout = Timeout(15.seconds)
 //import system.dispatcher // implicit execution context
 
-object AkkaHttp extends  App {
+object AkkaHttp {
    val system = ActorSystem("police-data-client")
 
   def callPoliceApi() {
