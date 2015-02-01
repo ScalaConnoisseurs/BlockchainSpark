@@ -1,18 +1,21 @@
-import org.scalatest._
+import java.util.Date
 
-/**
- * Created by michaeldecourci on 29/01/2015.
- */
-class HttpClientTest extends FlatSpec with Matchers {
+import akka.actor.ActorSystem
+import org.scalatest._
+import org.scalatest.concurrent.{ScalaFutures, Futures}
+import org.scalatest.Assertions._
+import org.scalatest.time.{Span, Seconds}
+
+class HttpClientTest extends FlatSpec with Matchers with ScalaFutures {
+
+  implicit val actorSystem = ActorSystem("police-data-client")
+
+  val httpClient = new HttpClient()
+  
   "A Client" should "return Crime Last updated date" in {
-    val httpClient = new HttpClient();
-    httpClient.getLastUpdatedDate() should be new Date();
+    whenReady(httpClient.getLastUpdatedDate, timeout(Span(3, Seconds))) { result =>
+      result should include ("date")
+    }
   }
 
-//  it should "throw NoSuchElementException if an empty stack is popped" in {
-//    val emptyStack = new Stack[Int]
-//    a [NoSuchElementException] should be thrownBy {
-//      emptyStack.pop()
-//    }
-//  }
 }

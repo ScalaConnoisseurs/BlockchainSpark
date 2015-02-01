@@ -2,7 +2,7 @@ import akka.actor.ActorSystem
 import spray.routing.SimpleRoutingApp
 
 object Main extends SimpleRoutingApp with HttpRoutes {
-  implicit val system = ActorSystem("system")
+  implicit val system = ActorSystem("PoliceSpark")
 
   def main(args: Array[String]) {
     val port = parsePort(args)
