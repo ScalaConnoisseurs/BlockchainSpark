@@ -6,7 +6,7 @@ object Main extends SimpleRoutingApp with HttpRoutes {
 
   def main(args: Array[String]) {
     val port = parsePort(args)
-    startServer(interface = "localhost", port) {
+    startServer(interface = "0.0.0.0", port) {
       pingRoute
     }
   }
