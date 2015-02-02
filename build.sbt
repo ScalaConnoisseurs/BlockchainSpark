@@ -18,6 +18,9 @@ libraryDependencies += "io.spray" % "spray-testkit_2.11" % "1.3.2"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
 
 libraryDependencies += "org.scalamock" % "scalamock-specs2-support_2.11" % "3.2.1"
+
+libraryDependencies += "io.spray" %%  "spray-json" % "1.3.1"
+
