@@ -24,3 +24,4 @@ libraryDependencies += "org.scalamock" % "scalamock-specs2-support_2.11" % "3.2.
 
 libraryDependencies += "io.spray" %%  "spray-json" % "1.3.1"
 
+libraryDependencies += "org.threeten" % "threetenbp" % "1.2"

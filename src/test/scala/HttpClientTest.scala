@@ -1,10 +1,9 @@
-import java.util.Date
-
 import akka.actor.ActorSystem
 import org.scalatest._
 import org.scalatest.concurrent.{ScalaFutures, Futures}
-import org.scalatest.Assertions._
 import org.scalatest.time.{Span, Seconds}
+import org.threeten.bp.LocalDate
+
 
 class HttpClientTest extends FlatSpec with Matchers with ScalaFutures {
 
@@ -17,5 +16,13 @@ class HttpClientTest extends FlatSpec with Matchers with ScalaFutures {
        println(result)
     }
   }
+
+  it should "extract Date from Police json" in {
+
+    httpClient.dateFromJson("""{"date":"2014-11-01"}""") should be (LocalDate.of(2014, 11, 1))
+
+  }
+
+
 
 }
