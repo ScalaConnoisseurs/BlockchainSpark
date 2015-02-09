@@ -9,6 +9,7 @@ object Main extends SimpleRoutingApp with HttpRoutes {
     startServer(interface = "0.0.0.0", port) {
       pingRoute
     }
+    val bitcoinWebsocket = new BitcoinWebsocket()
   }
   
   def parsePort(args: Array[String]): Integer = 
