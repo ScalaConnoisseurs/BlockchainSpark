@@ -8,10 +8,11 @@ import spray.can.websocket.frame._
 import spray.http._
 import spray.routing.HttpServiceActor
 
-object BitcoinWebsocket extends App {
+class BitcoinWebsocket(implicit actorSystem: ActorSystem) {
 
   abstract class WebSocketClient(connect: Http.Connect, val upgradeRequest: HttpRequest) extends websocket.WebSocketClientWorker {
-    IO(UHttp) ! connect
+    // Apparently we need to use 2 actor systems for 2 http clients.
+    IO(UHttp)(ActorSystem("bitcoin-websoket")) ! connect
 
     def businessLogic: Receive = {
       case frame: Frame =>
@@ -27,9 +28,7 @@ object BitcoinWebsocket extends App {
     def onMessage(frame: Frame)
     def onClose()
   }
-
-  implicit val system = ActorSystem()
-
+  
   val ssl = false
   val host = "ws.blockchain.info"
   val port = 443
@@ -44,7 +43,7 @@ object BitcoinWebsocket extends App {
   val connect = Http.Connect(host, port, sslEncryption = true)
   val req = HttpRequest(HttpMethods.GET, "/inv", headers)
  
-  system.actorOf(Props(
+  actorSystem.actorOf(Props(
     new WebSocketClient(connect, req) {
       def onMessage(frame: Frame) {
         frame match {
@@ -60,7 +59,4 @@ object BitcoinWebsocket extends App {
     }
   ))
 
-  readLine("Hit ENTER to exit ...\n")
-  system.shutdown()
-  system.awaitTermination()
 }
