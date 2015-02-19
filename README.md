@@ -1,6 +1,6 @@
-# PoliceSpark
+# BlockchainSpark
 
-Large scale data processing of police crime statistics.
+Large scale data processing and analysis of blockchains.
 
 ## Setup
 
@@ -11,16 +11,16 @@ Large scale data processing of police crime statistics.
 ## Build
 
 1. Clone the repository.
-2. cd PoliceSpark
+2. cd BlockchainSpark
 3. sbt compile
 
 ## Deployment
 
 We are utilising Heroku platform as a service. Changes pushed to master are automatically deployed so please make sure tests are green before merging.
 
-Heroku app configuration: https://dashboard.heroku.com/apps/policespark
+Heroku app configuration: https://dashboard.heroku.com/apps/blockchainspark
 
-Production URL: http://policespark.herokuapp.com/
+Production URL: http://blockchainspark.herokuapp.com/
 
 ## Police API
 http://data.police.uk/api/crimes-at-location?date=2012-02&lat=52.629729&lng=-1.131592
