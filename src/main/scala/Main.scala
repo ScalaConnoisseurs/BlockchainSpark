@@ -24,8 +24,16 @@ object Main {
       Props(new UnconfirmedTransactionReceiverActor[UnconfirmedTransaction]("akka.tcp://BlockchainSpark@127.0.0.1:2550/user/Bitcoin")),
       "UnconfirmedTransactionReceiverActor", StorageLevel.MEMORY_ONLY)
 
+    val wordsFile = ssc.sparkContext.textFile("words.txt")
+    val fourLetterWords = wordsFile.filter(line => line.length <= 4).map(_.toUpperCase)
+
     lines.foreachRDD(rdd => rdd.foreach{ row =>
-      row.inputs.foreach(i => println(i.previousOut.address))
+      if(row.inputs(0).previousOut.address.substring(0,4).toUpperCase == "1TXT") {
+        row.inputs.foreach(i => {
+          println(fourLetterWords.filter(line => line == i.previousOut.address.substring(1,4).toUpperCase))
+
+        })
+      }
     })
     ssc.start()
     ssc.awaitTermination()

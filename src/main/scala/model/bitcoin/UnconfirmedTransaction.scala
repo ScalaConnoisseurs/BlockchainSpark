@@ -48,7 +48,7 @@ object TransactionJsonProtocol extends DefaultJsonProtocol {
   implicit object UnconfirmedTransactionFormat extends RootJsonFormat[UnconfirmedTransaction] {
     def write(uct: UnconfirmedTransaction) = ???
 
-    def read(value: JsValue) = value.asJsObject.getFields("size", "tx_index", "lock_time", "out", "vout_sz", "hash", "inputs", "ver", "relayed_by", "time", "vin_sz", "out") match {
+    def read(value: JsValue) = value.asJsObject.getFields("size", "tx_index", "lock_time", "out", "vout_sz", "hash", "inputs", "ver", "relayed_by", "time", "vin_sz") match {
       case Seq(JsNumber(size), JsNumber(tx_index), JsNumber(lock_time), JsArray(outputs), JsNumber(vout_sz), JsString(hash), JsArray(inputs), JsNumber(ver), JsString(relayed_by),
     JsNumber(time), JsNumber(vin_sz)) =>
         new UnconfirmedTransaction(lock_time.toInt, ver.toInt, size.toInt, inputs.map(_.convertTo[Input]).toArray, time.toLong, tx_index.toLong, vin_sz.toInt, hash, outputs.map(_.convertTo[Outputs]).toArray)
