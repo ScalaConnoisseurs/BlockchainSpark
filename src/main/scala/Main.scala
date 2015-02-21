@@ -2,6 +2,7 @@ import akka.actor.{Props, ActorSystem}
 import com.typesafe.config.ConfigFactory
 import model.bitcoin.UnconfirmedTransaction
 import org.apache.spark.SparkConf
+import org.apache.spark.storage.StorageLevel
 import org.apache.spark.streaming.{StreamingContext, Seconds}
 
 object Main {
@@ -20,9 +21,12 @@ object Main {
 
     val ssc = new StreamingContext(sparkConf, Seconds(5))
     val lines = ssc.actorStream[UnconfirmedTransaction](
-      Props(new UnconfirmedTransactionReceiverActor[UnconfirmedTransaction]("akka.tcp://BlockchainSpark@127.0.0.1:2550/user/Bitcoin")), "UnconfirmedTransactionReceiverActor")
+      Props(new UnconfirmedTransactionReceiverActor[UnconfirmedTransaction]("akka.tcp://BlockchainSpark@127.0.0.1:2550/user/Bitcoin")),
+      "UnconfirmedTransactionReceiverActor", StorageLevel.MEMORY_ONLY)
 
-    lines.foreachRDD(_.foreach(println))
+    lines.foreachRDD(rdd => rdd.foreach{ row =>
+      row.inputs.foreach(i => println(i.previousOut.address))
+    })
     ssc.start()
     ssc.awaitTermination()
   }
