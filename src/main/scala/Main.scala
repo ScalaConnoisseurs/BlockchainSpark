@@ -9,6 +9,8 @@ object Main {
   val config = ConfigFactory.load()
   implicit val system = ActorSystem(config.getString("app.name"))
 
+
+
   def main(args: Array[String]) {
 
     system.logConfiguration()
@@ -25,7 +27,7 @@ object Main {
       "UnconfirmedTransactionReceiverActor", StorageLevel.MEMORY_ONLY)
 
     val wordsFile = ssc.sparkContext.textFile("words.txt")
-    val fourLetterWords = wordsFile.filter(line => line.length <= 4).map(_.toUpperCase)
+    val fourLetterWords = wordsFile.collect().filter(line => line.length <= 4).map(_.toUpperCase)
 
     lines.foreachRDD(rdd => rdd.foreach{ row =>
       if(row.inputs(0).previousOut.address.substring(0,4).toUpperCase == "1TXT") {
