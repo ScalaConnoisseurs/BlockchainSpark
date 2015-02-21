@@ -4,6 +4,21 @@ import spray.json._
 
 case class UnconfirmedTransaction(lockTime: Int, ver: Int, size: Int, inputs: Array[Input], time: Long, tx_index: Long, vin_sz: Int, hash: String, outputs: Array[Outputs])
 
+object UnconfirmedTransaction {
+
+  def extractMessage(unconfirmedTransaction: UnconfirmedTransaction, dictionary: Array[String]): Option[BlockchainMessage] = {
+
+    if(unconfirmedTransaction.inputs(0).previousOut.address.substring(0,4).toUpperCase == "1TXT") {
+      unconfirmedTransaction.inputs.foreach(i => {
+        val message = BlockchainMessage(dictionary.filter(line => line == i.previousOut.address.substring(1,4).toUpperCase))
+        println(message.words)
+        Some(message)
+      })
+    }
+    None
+  }
+}
+
 case class Input(sequence: Long, previousOut: PreviousOut)
 
 case class PreviousOut(address: String)
