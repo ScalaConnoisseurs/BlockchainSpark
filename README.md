@@ -22,5 +22,3 @@ Heroku app configuration: https://dashboard.heroku.com/apps/blockchainspark
 
 Production URL: http://blockchainspark.herokuapp.com/
 
-## Police API
-http://data.police.uk/api/crimes-at-location?date=2012-02&lat=52.629729&lng=-1.131592
