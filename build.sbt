@@ -29,3 +29,5 @@ libraryDependencies += "org.scalamock" % "scalamock-specs2-support_2.11" % "3.2.
 libraryDependencies += "org.threeten" % "threetenbp" % "1.2"
 
 libraryDependencies += "org.apache.spark" %% "spark-streaming" % "1.2.1"
+
+libraryDependencies += "com.datastax.cassandra"  % "cassandra-driver-core" % "2.1.1"  exclude("org.xerial.snappy", "snappy-java")

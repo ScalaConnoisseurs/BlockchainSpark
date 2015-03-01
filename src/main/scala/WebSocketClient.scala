@@ -1,5 +1,6 @@
 import akka.actor.{ActorSystem, ActorRef}
 import akka.io.IO
+import model.bitcoin.{UnsubscribeReceiver, SubscribeReceiver}
 import spray.can.server.UHttp
 import spray.can.websocket.frame.{TextFrame, Frame}
 import spray.can.{websocket, Http}
