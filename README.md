@@ -22,3 +22,22 @@ Heroku app configuration: https://dashboard.heroku.com/apps/blockchainspark
 
 Production URL: http://blockchainspark.herokuapp.com/
 
+## Cassandra
+1 - Download and install Cassandra
+2 - Download Datastax Dev center (something like TOAD for Cassandra)
+    Or use CQL shell
+3 - Start Cassandra with CASSANDRA_HOME/bin/cassandra.bat (on windows)
+
+4 - Use the CQL statements from cassandra-scripts.cql under resources to:
+    create key space 'bitcoin_spark' (equivalent to oracle schema)
+    create table (column family) 'UnconfirmedTransaction'
+5 - To see the persisted records:
+    CQL shell:
+        start cql shell CASSANDRA_HOME/bin/cqlsh.bat (on windows)
+        once connected
+        cql>use bitcoin_spark;
+        cql:bitcoin_spark> select * from UnconfirmedTransaction;
+    DataStax Dev Centre:
+        Create new connection for running cassandra;
+        select connection and keyspace
+        execute cql: select * from UnconfirmedTransaction;
