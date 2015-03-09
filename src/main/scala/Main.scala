@@ -24,7 +24,7 @@ object Main {
       Props(new UnconfirmedTransactionReceiverActor[UnconfirmedTransaction]("akka.tcp://BlockchainSpark@127.0.0.1:2550/user/Bitcoin")),
       "UnconfirmedTransactionReceiverActor", StorageLevel.MEMORY_ONLY)
 
-    val wordsFile = ssc.sparkContext.textFile("/Users/ele/Code/Projects/PoliceSpark/src/main/resources/words.txt")
+    val wordsFile = ssc.sparkContext.textFile("/home/joe/Work/BlockchainSpark/src/main/resources/words.txt")
     val fourLetterWords = wordsFile.collect().filter(line => line.length <= 4).map(_.toUpperCase)
 
     lines.foreachRDD(rdd => rdd.foreach{ row =>

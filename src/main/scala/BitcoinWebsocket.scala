@@ -27,10 +27,10 @@ class BitcoinWebsocket(actorSystem: ActorSystem) {
   val req = HttpRequest(HttpMethods.GET, "/inv", headers)
   import spray.json._
 
-  actorSystem.actorOf(Props(
-    new WebSocketClient(actorSystem, connect, req) {
+  val bitcoinClient = actorSystem.actorOf(Props(
+    new WebSocketClient(connect, req) {
 
-      def onMessage(frame: Frame) {
+      override def onMessage(frame: Frame) {
         frame match {
           case _: PongFrame =>
           case _: PingFrame => connection ! PongFrame()
@@ -41,11 +41,13 @@ class BitcoinWebsocket(actorSystem: ActorSystem) {
             receivers.foreach(_ ! transaction)
         }
       }
-
-      def onClose() {
-        println("Websocket closed")
+      
+      override def onConnect() {
+        connection ! TextFrame("{\"op\":\"unconfirmed_sub\"}")
       }
     }
   ), "Bitcoin")
+  
+  bitcoinClient ! "start"
 
 }
