@@ -13,7 +13,7 @@ object Main {
 
     system.logConfiguration()
     val bitcoinWebsocket = new BitcoinWebsocket(system)
-
+    bitcoinWebsocket.start()
 
     val sparkConf = new SparkConf()
       .setMaster("local[2]") // 2 cores

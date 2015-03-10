@@ -47,7 +47,9 @@ class BitcoinWebsocket(actorSystem: ActorSystem) {
       }
     }
   ), "Bitcoin")
-  
-  bitcoinClient ! "start"
+ 
+  def start() {
+    bitcoinClient ! "start"
+  }
 
 }

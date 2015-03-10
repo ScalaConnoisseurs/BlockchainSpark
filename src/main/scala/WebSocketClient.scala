@@ -7,12 +7,19 @@ import spray.http.HttpRequest
 
 
 class WebSocketClient(connect: Http.Connect, val upgradeRequest: HttpRequest) extends websocket.WebSocketClientWorker {
-  
-  var receivers: List[ActorRef] = List()
 
+  var receivers: List[ActorRef] = List()
+  
+  context.become(stopped)
+
+  def stopped: Receive = {
+    case "start" =>  {
+      IO(UHttp)(context.system) ! connect
+      context.become(receive)
+    }
+  }
+  
   def businessLogic: Receive = {
-    case "start" =>
-      IO(UHttp)(context.system) ! connect // use become?
     case frame: Frame =>
       onMessage(frame)
     case _: Http.ConnectionClosed =>
