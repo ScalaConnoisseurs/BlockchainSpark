@@ -32,8 +32,6 @@ class BitcoinWebsocket(actorSystem: ActorSystem) {
 
       override def onMessage(frame: Frame) {
         frame match {
-          case _: PongFrame =>
-          case _: PingFrame => connection ! PongFrame()
           case TextFrame(text) =>
             val textString = text.utf8String
             val transaction = JsonParser(textString).asJsObject.fields.get("x").get.convertTo[UnconfirmedTransaction]

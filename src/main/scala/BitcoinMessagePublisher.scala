@@ -21,6 +21,7 @@ class WebSocketServer extends Actor with ActorLogging {
       receivers = receivers.+:(conn)
   }
 }
+
 object WebSocketWorker {
   def props(serverConnection: ActorRef) = Props(classOf[WebSocketWorker], serverConnection)
 }
